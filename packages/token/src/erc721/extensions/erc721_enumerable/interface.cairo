@@ -9,15 +9,15 @@ pub const IERC721ENUMERABLE_ID: felt252 =
 
 #[starknet::interface]
 pub trait IERC721Enumerable<TState> {
-    fn total_supply(self: @TState) -> u128;
-    fn token_by_index(self: @TState, index: u128) -> u128;
-    fn token_of_owner_by_index(self: @TState, owner: ContractAddress, index: u128) -> u128;
+    fn total_supply(self: @TState) -> u64;
+    fn token_by_index(self: @TState, index: u64) -> u64;
+    fn token_of_owner_by_index(self: @TState, owner: ContractAddress, index: u64) -> u64;
 }
 
 #[starknet::interface]
 pub trait ERC721EnumerableABI<TState> {
-    fn total_supply(self: @TState) -> u128;
-    fn token_by_index(self: @TState, index: u128) -> u128;
-    fn token_of_owner_by_index(self: @TState, owner: ContractAddress, index: u128) -> u128;
-    fn all_tokens_of_owner(self: @TState, owner: ContractAddress) -> Span<u128>;
+    fn total_supply(self: @TState) -> u64;
+    fn token_by_index(self: @TState, index: u64) -> u64;
+    fn token_of_owner_by_index(self: @TState, owner: ContractAddress, index: u64) -> u64;
+    fn all_tokens_of_owner(self: @TState, owner: ContractAddress) -> Span<u64>;
 }

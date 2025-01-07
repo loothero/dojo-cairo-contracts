@@ -33,7 +33,7 @@ pub mod ERC721ReceiverComponent {
             self: @ComponentState<TContractState>,
             operator: ContractAddress,
             from: ContractAddress,
-            token_id: u128,
+            token_id: u64,
             data: Span<felt252>
         ) -> felt252 {
             IERC721_RECEIVER_ID
@@ -52,7 +52,7 @@ pub mod ERC721ReceiverComponent {
             self: @ComponentState<TContractState>,
             operator: ContractAddress,
             from: ContractAddress,
-            tokenId: u128,
+            tokenId: u64,
             data: Span<felt252>
         ) -> felt252 {
             IERC721_RECEIVER_ID
@@ -86,7 +86,7 @@ pub mod ERC721ReceiverComponent {
             self: @ComponentState<TContractState>,
             operator: ContractAddress,
             from: ContractAddress,
-            token_id: u128,
+            token_id: u64,
             data: Span<felt252>
         ) -> felt252 {
             ERC721Receiver::on_erc721_received(self, operator, from, token_id, data)
@@ -97,7 +97,7 @@ pub mod ERC721ReceiverComponent {
             self: @ComponentState<TContractState>,
             operator: ContractAddress,
             from: ContractAddress,
-            tokenId: u128,
+            tokenId: u64,
             data: Span<felt252>
         ) -> felt252 {
             ERC721ReceiverCamel::onERC721Received(self, operator, from, tokenId, data)
