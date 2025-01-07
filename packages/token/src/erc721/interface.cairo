@@ -11,19 +11,19 @@ pub const IERC721_RECEIVER_ID: felt252 =
 
 #[starknet::interface]
 pub trait IERC721<TState> {
-    fn balance_of(self: @TState, account: ContractAddress) -> u256;
-    fn owner_of(self: @TState, token_id: u256) -> ContractAddress;
+    fn balance_of(self: @TState, account: ContractAddress) -> u128;
+    fn owner_of(self: @TState, token_id: u128) -> ContractAddress;
     fn safe_transfer_from(
         ref self: TState,
         from: ContractAddress,
         to: ContractAddress,
-        token_id: u256,
+        token_id: u128,
         data: Span<felt252>
     );
-    fn transfer_from(ref self: TState, from: ContractAddress, to: ContractAddress, token_id: u256);
-    fn approve(ref self: TState, to: ContractAddress, token_id: u256);
+    fn transfer_from(ref self: TState, from: ContractAddress, to: ContractAddress, token_id: u128);
+    fn approve(ref self: TState, to: ContractAddress, token_id: u128);
     fn set_approval_for_all(ref self: TState, operator: ContractAddress, approved: bool);
-    fn get_approved(self: @TState, token_id: u256) -> ContractAddress;
+    fn get_approved(self: @TState, token_id: u128) -> ContractAddress;
     fn is_approved_for_all(
         self: @TState, owner: ContractAddress, operator: ContractAddress
     ) -> bool;
@@ -33,29 +33,29 @@ pub trait IERC721<TState> {
 pub trait IERC721Metadata<TState> {
     fn name(self: @TState) -> ByteArray;
     fn symbol(self: @TState) -> ByteArray;
-    fn token_uri(self: @TState, token_id: u256) -> ByteArray;
+    fn token_uri(self: @TState, token_id: u128) -> ByteArray;
 }
 
 #[starknet::interface]
 pub trait IERC721CamelOnly<TState> {
-    fn balanceOf(self: @TState, account: ContractAddress) -> u256;
-    fn ownerOf(self: @TState, tokenId: u256) -> ContractAddress;
+    fn balanceOf(self: @TState, account: ContractAddress) -> u128;
+    fn ownerOf(self: @TState, tokenId: u128) -> ContractAddress;
     fn safeTransferFrom(
         ref self: TState,
         from: ContractAddress,
         to: ContractAddress,
-        tokenId: u256,
+        tokenId: u128,
         data: Span<felt252>
     );
-    fn transferFrom(ref self: TState, from: ContractAddress, to: ContractAddress, tokenId: u256);
+    fn transferFrom(ref self: TState, from: ContractAddress, to: ContractAddress, tokenId: u128);
     fn setApprovalForAll(ref self: TState, operator: ContractAddress, approved: bool);
-    fn getApproved(self: @TState, tokenId: u256) -> ContractAddress;
+    fn getApproved(self: @TState, tokenId: u128) -> ContractAddress;
     fn isApprovedForAll(self: @TState, owner: ContractAddress, operator: ContractAddress) -> bool;
 }
 
 #[starknet::interface]
 pub trait IERC721MetadataCamelOnly<TState> {
-    fn tokenURI(self: @TState, tokenId: u256) -> ByteArray;
+    fn tokenURI(self: @TState, tokenId: u128) -> ByteArray;
 }
 
 //
@@ -65,19 +65,19 @@ pub trait IERC721MetadataCamelOnly<TState> {
 #[starknet::interface]
 pub trait ERC721ABI<TState> {
     // IERC721
-    fn balance_of(self: @TState, account: ContractAddress) -> u256;
-    fn owner_of(self: @TState, token_id: u256) -> ContractAddress;
+    fn balance_of(self: @TState, account: ContractAddress) -> u128;
+    fn owner_of(self: @TState, token_id: u128) -> ContractAddress;
     fn safe_transfer_from(
         ref self: TState,
         from: ContractAddress,
         to: ContractAddress,
-        token_id: u256,
+        token_id: u128,
         data: Span<felt252>
     );
-    fn transfer_from(ref self: TState, from: ContractAddress, to: ContractAddress, token_id: u256);
-    fn approve(ref self: TState, to: ContractAddress, token_id: u256);
+    fn transfer_from(ref self: TState, from: ContractAddress, to: ContractAddress, token_id: u128);
+    fn approve(ref self: TState, to: ContractAddress, token_id: u128);
     fn set_approval_for_all(ref self: TState, operator: ContractAddress, approved: bool);
-    fn get_approved(self: @TState, token_id: u256) -> ContractAddress;
+    fn get_approved(self: @TState, token_id: u128) -> ContractAddress;
     fn is_approved_for_all(
         self: @TState, owner: ContractAddress, operator: ContractAddress
     ) -> bool;
@@ -88,25 +88,25 @@ pub trait ERC721ABI<TState> {
     // IERC721Metadata
     fn name(self: @TState) -> ByteArray;
     fn symbol(self: @TState) -> ByteArray;
-    fn token_uri(self: @TState, token_id: u256) -> ByteArray;
+    fn token_uri(self: @TState, token_id: u128) -> ByteArray;
 
     // IERC721CamelOnly
-    fn balanceOf(self: @TState, account: ContractAddress) -> u256;
-    fn ownerOf(self: @TState, tokenId: u256) -> ContractAddress;
+    fn balanceOf(self: @TState, account: ContractAddress) -> u128;
+    fn ownerOf(self: @TState, tokenId: u128) -> ContractAddress;
     fn safeTransferFrom(
         ref self: TState,
         from: ContractAddress,
         to: ContractAddress,
-        tokenId: u256,
+        tokenId: u128,
         data: Span<felt252>
     );
-    fn transferFrom(ref self: TState, from: ContractAddress, to: ContractAddress, tokenId: u256);
+    fn transferFrom(ref self: TState, from: ContractAddress, to: ContractAddress, tokenId: u128);
     fn setApprovalForAll(ref self: TState, operator: ContractAddress, approved: bool);
-    fn getApproved(self: @TState, tokenId: u256) -> ContractAddress;
+    fn getApproved(self: @TState, tokenId: u128) -> ContractAddress;
     fn isApprovedForAll(self: @TState, owner: ContractAddress, operator: ContractAddress) -> bool;
 
     // IERC721MetadataCamelOnly
-    fn tokenURI(self: @TState, tokenId: u256) -> ByteArray;
+    fn tokenURI(self: @TState, tokenId: u128) -> ByteArray;
 }
 
 //
@@ -119,7 +119,7 @@ pub trait IERC721Receiver<TState> {
         self: @TState,
         operator: ContractAddress,
         from: ContractAddress,
-        token_id: u256,
+        token_id: u128,
         data: Span<felt252>
     ) -> felt252;
 }
@@ -130,7 +130,7 @@ pub trait IERC721ReceiverCamel<TState> {
         self: @TState,
         operator: ContractAddress,
         from: ContractAddress,
-        tokenId: u256,
+        tokenId: u128,
         data: Span<felt252>
     ) -> felt252;
 }
@@ -142,7 +142,7 @@ pub trait ERC721ReceiverMixin<TState> {
         self: @TState,
         operator: ContractAddress,
         from: ContractAddress,
-        token_id: u256,
+        token_id: u128,
         data: Span<felt252>
     ) -> felt252;
 
@@ -151,7 +151,7 @@ pub trait ERC721ReceiverMixin<TState> {
         self: @TState,
         operator: ContractAddress,
         from: ContractAddress,
-        tokenId: u256,
+        tokenId: u128,
         data: Span<felt252>
     ) -> felt252;
 

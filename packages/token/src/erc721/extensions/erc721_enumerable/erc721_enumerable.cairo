@@ -31,11 +31,11 @@ pub mod ERC721EnumerableComponent {
 
     #[storage]
     pub struct Storage {
-        pub ERC721Enumerable_owned_tokens: Map<(ContractAddress, u256), u256>,
-        pub ERC721Enumerable_owned_tokens_index: Map<u256, u256>,
-        pub ERC721Enumerable_all_tokens_len: u256,
-        pub ERC721Enumerable_all_tokens: Map<u256, u256>,
-        pub ERC721Enumerable_all_tokens_index: Map<u256, u256>
+        pub ERC721Enumerable_owned_tokens: Map<(ContractAddress, u128), u128>,
+        pub ERC721Enumerable_owned_tokens_index: Map<u128, u128>,
+        pub ERC721Enumerable_all_tokens_len: u128,
+        pub ERC721Enumerable_all_tokens: Map<u128, u128>,
+        pub ERC721Enumerable_all_tokens_index: Map<u128, u128>
     }
 
     pub mod Errors {
@@ -52,7 +52,7 @@ pub mod ERC721EnumerableComponent {
         +Drop<TContractState>
     > of interface::IERC721Enumerable<ComponentState<TContractState>> {
         /// Returns the total amount of tokens stored by the contract.
-        fn total_supply(self: @ComponentState<TContractState>) -> u256 {
+        fn total_supply(self: @ComponentState<TContractState>) -> u128 {
             self.ERC721Enumerable_all_tokens_len.read()
         }
 
@@ -62,7 +62,7 @@ pub mod ERC721EnumerableComponent {
         /// Requirements:
         ///
         /// - `index` is less than the total token supply.
-        fn token_by_index(self: @ComponentState<TContractState>, index: u256) -> u256 {
+        fn token_by_index(self: @ComponentState<TContractState>, index: u128) -> u128 {
             assert(index < self.total_supply(), Errors::OUT_OF_BOUNDS_INDEX);
             self.ERC721Enumerable_all_tokens.read(index)
         }
@@ -75,8 +75,8 @@ pub mod ERC721EnumerableComponent {
         /// - `index` is less than `owner`'s token balance.
         /// - `owner` is not the zero address.
         fn token_of_owner_by_index(
-            self: @ComponentState<TContractState>, owner: ContractAddress, index: u256
-        ) -> u256 {
+            self: @ComponentState<TContractState>, owner: ContractAddress, index: u128
+        ) -> u128 {
             let erc721_component = get_dep_component!(self, ERC721);
             assert(index < erc721_component.balance_of(owner), Errors::OUT_OF_BOUNDS_INDEX);
             self.ERC721Enumerable_owned_tokens.read((owner, index))
@@ -114,7 +114,7 @@ pub mod ERC721EnumerableComponent {
         /// This must be added to the implementing contract's `ERC721HooksTrait::before_update`
         /// hook.
         fn before_update(
-            ref self: ComponentState<TContractState>, to: ContractAddress, token_id: u256
+            ref self: ComponentState<TContractState>, to: ContractAddress, token_id: u128
         ) {
             let erc721_component = get_dep_component!(@self, ERC721);
             let previous_owner = erc721_component._owner_of(token_id);
@@ -141,7 +141,7 @@ pub mod ERC721EnumerableComponent {
         /// - `owner` is not the zero address.
         fn all_tokens_of_owner(
             self: @ComponentState<TContractState>, owner: ContractAddress
-        ) -> Span<u256> {
+        ) -> Span<u128> {
             let mut result = array![];
             let balance = get_dep_component!(self, ERC721).balance_of(owner);
             for index in 0
@@ -153,7 +153,7 @@ pub mod ERC721EnumerableComponent {
 
         /// Adds token to this extension's ownership-tracking data structures.
         fn _add_token_to_owner_enumeration(
-            ref self: ComponentState<TContractState>, to: ContractAddress, token_id: u256
+            ref self: ComponentState<TContractState>, to: ContractAddress, token_id: u128
         ) {
             let mut erc721_component = get_dep_component_mut!(ref self, ERC721);
             let len = erc721_component.balance_of(to);
@@ -163,7 +163,7 @@ pub mod ERC721EnumerableComponent {
 
         /// Adds token to this extension's token-tracking data structures.
         fn _add_token_to_all_tokens_enumeration(
-            ref self: ComponentState<TContractState>, token_id: u256
+            ref self: ComponentState<TContractState>, token_id: u128
         ) {
             let supply = self.total_supply();
             self.ERC721Enumerable_all_tokens_index.write(token_id, supply);
@@ -177,7 +177,7 @@ pub mod ERC721EnumerableComponent {
         /// swapping `token_id` and the index thereof with the last token id and the index
         /// thereof.
         fn _remove_token_from_owner_enumeration(
-            ref self: ComponentState<TContractState>, from: ContractAddress, token_id: u256
+            ref self: ComponentState<TContractState>, from: ContractAddress, token_id: u128
         ) {
             let erc721_component = get_dep_component!(@self, ERC721);
             let last_token_index = erc721_component.balance_of(from) - 1;
@@ -206,7 +206,7 @@ pub mod ERC721EnumerableComponent {
         /// This has 0(1) time complexity but alters the indexed order by swapping
         /// `token_id` and the index thereof with the last token id and the index thereof.
         fn _remove_token_from_all_tokens_enumeration(
-            ref self: ComponentState<TContractState>, token_id: u256
+            ref self: ComponentState<TContractState>, token_id: u128
         ) {
             let last_token_index = self.total_supply() - 1;
             let this_token_index = self.ERC721Enumerable_all_tokens_index.read(token_id);
